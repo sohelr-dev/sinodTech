@@ -10,16 +10,28 @@ class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
 
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
-
         $this->call([
             RolePermissionSeeder::class,
             UserRoleSeeder::class,
+            BranchSeeder::class,
+            ProductSeeder::class,
+            CustomerSeeder::class,
         ]);
+
+        // Seed inventory for all products across all branches
+        $branches = \App\Models\Branch::all();
+        $products = \App\Models\Product::all();
+
+        foreach ($branches as $branch) {
+            foreach ($products as $product) {
+                \App\Models\Inventory::create([
+                    'product_id' => $product->id,
+                    'branch_id' => $branch->id,
+                    'stock_quantity' => rand(20, 100)
+                ]);
+            }
+        }
     }
 }

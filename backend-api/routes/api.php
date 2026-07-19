@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Route;
 
 
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\SaleController;
+use App\Http\Controllers\Api\CustomerController;
+use App\Http\Controllers\Api\BranchController;
 
 //Auth routes guest only
 Route::prefix('auth')->group(function () {
@@ -29,4 +32,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // ─── Product Management ───────────────────────────────────────────
     Route::apiResource('products', ProductController::class);
+
+    // ─── Sales & Checkout ─────────────────────────────────────────────
+    Route::get('sales', [SaleController::class, 'index']);
+    Route::post('sales', [SaleController::class, 'store']);
+    Route::get('sales/{id}', [SaleController::class, 'show']);
+
+    // ─── Branches & Customers ─────────────────────────────────────────
+    Route::get('branches', [BranchController::class, 'index']);
+    Route::get('customers', [CustomerController::class, 'index']);
 });
