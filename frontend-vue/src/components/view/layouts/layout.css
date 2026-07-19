@@ -1,0 +1,104 @@
+/* Sidebar Base */
+#sidebar {
+  width: 280px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0c0b0c 0%, #000001 100%);
+  color: #fff;
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+  transition: left 0.3s ease-in-out;
+  overflow-y: auto;
+}
+
+/* Close button for mobile */
+#close-btn {
+  position: absolute;
+  left: 248px;
+  top: 2px;
+}
+
+/* Sidebar links */
+.nav-link {
+  color: #fff;
+  font-size: 16.5px;
+  transition: color 0.3s ease-in-out;
+}
+.nav-link:hover {
+  color: burlywood !important;
+}
+
+/* Active link */
+.nav-link.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  font-weight: bold;
+  border-radius: 6px;
+  border-left: 4px solid lightgoldenrodyellow;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+/* Submenu list */
+.nav .collapse .nav-link {
+  font-size: 15px;
+  padding-left: 1.5rem;
+}
+
+/* Overlay for mobile/tablet */
+.bg-layer {
+  display: none;
+}
+
+#sidebar-toggle:checked ~ .bg-layer {
+  display: block;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1990;
+}
+
+/* Sidebar toggle for small screens */
+@media screen and (max-width: 769px) {
+  #sidebar {
+    left: -280px;
+  }
+
+  #sidebar-toggle:checked ~ #sidebar {
+    left: 0;
+  }
+}
+
+/* Tablet/Laptop */
+@media(max-width: 1024px) {
+  #sidebar {
+    left: -280px !important;
+  }
+
+  #sidebar-toggle:checked ~ #sidebar {
+    left: 0 !important;
+  }
+
+  #sidebar-toggle:checked ~ .bg-layer {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1990;
+  }
+}
+
+/* Dashboard card hover (if you use cards) */
+.card-hover {
+  transition: all 0.3s ease-in-out;
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(25, 0, 0, 0.1);
+}

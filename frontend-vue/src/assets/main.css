@@ -1,0 +1,139 @@
+.text-primary {
+  color: #002D62 !important;
+}
+
+.bg-primary {
+  background-color: #002D62 !important;
+}
+
+.text-warning {
+  color: #FDB913 !important;
+}
+
+.bg-warning {
+  background-color: #FDB913 !important;
+}
+
+.btn-primary {
+  background-color: #002D62 !important;
+  border-color: #002D62 !important;
+  color: #fff !important;
+}
+
+.btn-warning {
+  background-color: #FDB913 !important;
+  border-color: #FDB913 !important;
+  color: #002D62 !important;
+}
+
+.submenu-wrapper .nav-link:hover {
+  color: #FDB913 !important;
+  background: transparent;
+}
+
+/* ============================================================
+   FNF TRIP CUSTOM DARK MODE (main.css)
+   Branding: Navy Blue (#002D62) & Golden Yellow (#FDB913)
+   ============================================================ */
+
+[data-bs-theme="dark"] {
+  --bs-body-bg: #030712 !important;
+  --bs-body-color: #f1f5f9 !important;
+  --bs-border-color: #1e293b !important;
+
+  --bs-primary: #1e60ad !important;
+  --bs-primary-rgb: 30, 96, 173 !important;
+  --bs-warning: #FDB913 !important;
+}
+
+/* */
+[data-bs-theme="dark"] .dropdown-item:hover,
+[data-bs-theme="dark"] .nav-link:hover {
+  background-color: rgba(192, 189, 189, 0.866) !important;
+  color: #1e293b !important;
+  transition: all 0.2s ease-in-out;
+  border-radius: 10px;
+}
+
+[data-bs-theme="dark"] .submenu-wrapper,
+[data-bs-theme="dark"] .nav-link:hover {
+  color: #858e9c !important;
+  transition: all 0.2s ease-in-out;
+  border-radius: 10px;
+}
+
+/* card dropdown*/
+[data-bs-theme="dark"] .card,
+[data-bs-theme="dark"] .dropdown-menu {
+  background-color: #0f172a !important;
+  /* card bg */
+  border: 1px solid #1e293b !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* table Hover  */
+[data-bs-theme="dark"] .table {
+  --bs-table-color: #cbd5e1;
+  --bs-table-border-color: #1e293b;
+}
+
+[data-bs-theme="dark"] .table-hover tbody tr:hover {
+  background-color: rgba(253, 185, 19, 0.05) !important;
+  /*row to yellow shado */
+  color: #ffffff;
+}
+
+/* imput field */
+[data-bs-theme="dark"] .form-control {
+  background-color: #0f172a !important;
+  border-color: #334155 !important;
+  color: #f8fafc !important;
+}
+
+[data-bs-theme="dark"] .form-control:focus {
+  border-color: #FDB913 !important;
+  box-shadow: 0 0 0 0.25rem rgba(253, 185, 19, 0.2) !important;
+}
+
+/* scrollbar  */
+[data-bs-theme="dark"] ::-webkit-scrollbar {
+  width: 8px;
+}
+
+[data-bs-theme="dark"] ::-webkit-scrollbar-track {
+  background: #030712;
+}
+
+[data-bs-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 10px;
+}
+
+[data-bs-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: #FDB913;
+
+}
+
+[data-bs-theme="dark"] .text-primary {
+  color: #60a5fa !important;
+}
+
+[data-bs-theme="dark"] .text-warning {
+  color: #FDB913 !important;
+}
+
+[data-bs-theme="dark"] .nav-link.active,
+[data-bs-theme="dark"] .router-link-active,
+[data-bs-theme="dark"] .nav-link:hover {
+  /* color: #FDB913 !important; */
+  transition: all 0.3s ease;
+  border-left: 3px solid #FDB913;
+}
+
+[data-bs-theme="dark"] .nav-link.active,
+[data-bs-theme="dark"] .router-link-active {
+  background-color: #9a9c9e !important;
+  color: #ffffff !important;
+  border-left: 4px solid #FDB913;
+  font-weight: 600;
+}

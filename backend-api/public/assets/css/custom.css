@@ -1,0 +1,349 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.navbar {
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.nav-link {
+    color: #333 !important;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background-color: #0056b3;
+    border: none;
+}
+
+/* Service Pills Styling */
+.nav-pills .nav-link {
+    background-color: #fff;
+    color: #0056b3;
+    border: 1px solid #0056b3;
+    margin: 5px;
+    border-radius: 20px;
+}
+
+.nav-pills .nav-link.active {
+    background-color: #0056b3;
+    color: #fff;
+}
+
+.logoNav {
+    width: 40px;
+    height: 40px;
+    border-radius: 30%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+}
+
+/* Custom Styling for Attractive Look */
+.accordion-item {
+    border: none;
+    margin-bottom: 15px;
+    border-radius: 12px !important;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+/* Hover Effect on Accordion */
+.accordion-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.accordion-button {
+    font-size: 1.1rem;
+    background-color: #ffffff !important;
+    color: #333 !important;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #f0f7ff !important;
+    color: #0056b3 !important;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* Details Card Styling */
+.package-card {
+    background: #ffffff;
+    border-left: 5px solid #0056b3;
+    padding: 20px;
+    margin-top: 15px;
+    border-radius: 8px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.02);
+}
+
+.pkg-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #222;
+}
+
+.price-tag {
+    font-size: 1.2rem;
+    color: #28a745;
+    font-weight: bold;
+}
+
+.btn-pkg-select {
+    border-radius: 30px;
+    padding: 8px 20px;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+
+/* Modern Professional Footer Styling */
+footer {
+    background: linear-gradient(135deg, #001a33 0%, #002d5b 100%);
+    color: #e0e0e0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.footer-link {
+    color: #b0c4de;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 0.9rem;
+}
+
+.footer-link:hover {
+    color: #ffffff;
+    padding-left: 5px;
+}
+
+.footer-title {
+    color: #ffffff;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.footer-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 40px;
+    height: 2px;
+    background-color: #007bff;
+}
+
+.social-icons a {
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    text-align: center;
+    line-height: 35px;
+    border-radius: 50%;
+    margin-right: 10px;
+    transition: 0.3s;
+}
+
+.social-icons a:hover {
+    background: #007bff;
+    transform: translateY(-3px);
+}
+
+.copyright-section {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 15px 0;
+    margin-top: 40px;
+}
+
+.bg-image {
+    background-position: center;
+    background-size: cover;
+    min-height: 250px;
+    height: 100%;
+}
+
+/* for search box*/
+.search-box {
+    border: 1px solid #ddd;
+}
+
+.search-box input:focus {
+    box-shadow: none;
+}
+
+
+.package-card {
+    border-radius: 15px !important;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+}
+
+.package-card:hover {
+    transform: scale(1.02);
+}
+
+.price-tag-modern {
+    background: #f1f8e9;
+    color: #2e7d32;
+    padding: 8px 15px;
+    border-radius: 12px;
+    font-weight: 700;
+}
+
+
+@media (max-width: 768px) {
+    .mt-n5 {
+        margin-top: 20px !important;
+    }
+}
+
+.package-card:hover {
+    transform: scale(1.02);
+}
+
+.form-control {
+    border-radius: 8px;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.25 row rgba(0, 86, 179, 0.1);
+    border-color: #0056b3;
+}
+
+.modal-content {
+    border-radius: 15px;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #0056b3, #00aaff);
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 86, 179, 0.3);
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    transform: scale(1.05);
+    background: linear-gradient(45deg, #004494, #0088cc);
+}
+
+
+.package-card {
+    border-left: 5px solid #0056b3;
+    background: #ffffff;
+    transition: 0.3s;
+}
+
+
+.pkg-img-placeholder {
+    width: 100%;
+    height: 150px;
+    background-color: #eee;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+}
+
+footer {
+    border-radius: 50px 50px 0 0;
+    margin-top: 80px;
+}
+@media (max-width: 768px) {
+    .dropdown-menu {
+        position: absolute !important;
+        right: 0;
+        left: auto;
+    }
+}
+.hide-arrow::after {
+    display: none !important;
+}
+
+.dropdown-menu {
+    min-width: 240px;
+    border-radius: 12px !important;
+}
+
+.notification-list {
+    min-width: 280px;
+}
+.anim-up {
+    animation: fadeInUp 0.3s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.dropdown-item {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    transition: all 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: #f0f7ff;
+    color: #0d6efd;
+    padding-left: 1.5rem;
+}
+.profile-img {
+    transition: transform 0.2s ease;
+}
+
+.profile-img:hover {
+    transform: scale(1.05);
+}
+
+
+@media (max-width: 991.98px) {
+    .dropdown-menu {
+        position: absolute !important;
+        right: 0 !important;
+        left: auto !important;
+    }
+}
+/* notification */
+@media (max-width: 576px) {
+    .notif-dropdown-mobile {
+        width: 90vw !important;
+        position: absolute !important;
+        right: -90px !important;
+        left: auto !important;
+        transform: none !important;
+        margin-top: 15px !important;
+    }
+}
+
+@media (min-width: 577px) {
+    .notif-dropdown-mobile {
+        min-width: 320px;
+    }
+}
+
+.dropdown-item {
+    white-space: normal !important;
+    word-wrap: break-word;
+}
