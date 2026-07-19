@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Dashboard from "../view/pages/admin/Dashboard.vue";
+import Products from "../view/pages/admin/Products.vue";
 import Login from "../view/auth/Login.vue";
 import DefaultLayout from "../view/layouts/DefaultLayout.vue";
 import { useAuthStore } from "../../store/auth";
@@ -23,6 +24,7 @@ const routes = [
     children: [
       {path: '', redirect: '/dashboard'},
       { path: 'dashboard', component: Dashboard, meta: { requiresAuth: true, role: 'admin' } },
+      { path: 'products', component: Products, meta: { requiresAuth: true, role: 'admin' } },
       
     ]
   },

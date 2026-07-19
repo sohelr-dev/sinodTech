@@ -56,15 +56,42 @@ watch(() => props.isCollapsed, (newVal) => {
                     </router-link>
                 </li>
 
+                <!-- ─── Products ─────────────────────────────── -->
+                <li class="nav-item">
+                    <router-link to="/products" class="nav-link d-flex align-items-center gap-3 rounded-3 py-2"
+                        @click="emit('closeMobile')">
+                        <i class="bi bi-box-seam fs-5"></i>
+                        <span v-if="!isCollapsed" class="sidebar-text">Products</span>
+                    </router-link>
+                </li>
+
+                <!-- ─── Sales ─────────────────────────────────── -->
+                <li class="nav-item">
+                    <router-link to="/sales" class="nav-link d-flex align-items-center gap-3 rounded-3 py-2"
+                        @click="emit('closeMobile')">
+                        <i class="bi bi-cart-check fs-5"></i>
+                        <span v-if="!isCollapsed" class="sidebar-text">Sales</span>
+                    </router-link>
+                </li>
+
+                <!-- ─── CRM ───────────────────────────────────── -->
+                <li class="nav-item">
+                    <router-link to="/crm" class="nav-link d-flex align-items-center gap-3 rounded-3 py-2"
+                        @click="emit('closeMobile')">
+                        <i class="bi bi-people-fill fs-5"></i>
+                        <span v-if="!isCollapsed" class="sidebar-text">CRM</span>
+                    </router-link>
+                </li>
+
+                <!-- ─── Users ─────────────────────────────────── -->
                 <li class="nav-item">
                     <div class="nav-link d-flex align-items-center gap-3 rounded-3 py-2 cursor-pointer"
                         :class="{ 'active-dropdown': openMenu === 'users' }" @click="toggleMenu('users')">
-                        <i class="bi bi-people fs-5"></i>
+                        <i class="bi bi-shield-lock fs-5"></i>
                         <span v-if="!isCollapsed" class="sidebar-text">Users</span>
                         <i v-if="!isCollapsed"
                             :class="['bi bi-chevron-right ms-auto small transition-icon', { 'rotate-90': openMenu === 'users' }]"></i>
                     </div>
-
                     <Transition name="expand">
                         <div class="submenu-wrapper" v-show="openMenu === 'users' && !isCollapsed">
                             <ul class="nav flex-column ms-4 gap-1 mt-1">
@@ -79,39 +106,21 @@ watch(() => props.isCollapsed, (newVal) => {
                     </Transition>
                 </li>
 
+                <!-- ─── Employees ─────────────────────────────── -->
                 <li class="nav-item">
-                    <div class="nav-link d-flex align-items-center gap-3 rounded-3 py-2 cursor-pointer"
-                        :class="{ 'active-dropdown': openMenu === 'tours' }" @click="toggleMenu('tours')">
-                        <i class="bi bi-geo-alt fs-5"></i>
-                        <span v-if="!isCollapsed" class="sidebar-text">Tours</span>
-                        <i v-if="!isCollapsed"
-                            :class="['bi bi-chevron-right ms-auto small transition-icon', { 'rotate-90': openMenu === 'tours' }]"></i>
-                    </div>
-                    <Transition name="expand">
-                        <div class="submenu-wrapper" v-show="openMenu === 'tours' && !isCollapsed">
-                            <ul class="nav flex-column ms-4 gap-1 mt-1">
-                                <li><router-link to="/tours" class="nav-link py-2 small"
-                                        @click="emit('closeMobile')">All
-                                        Tours</router-link></li>
-                                <li><router-link to="/categories" class="nav-link py-2 small"
-                                        @click="emit('closeMobile')">Categories</router-link></li>
-                            </ul>
-                        </div>
-                    </Transition>
+                    <router-link to="/employees" class="nav-link d-flex align-items-center gap-3 rounded-3 py-2"
+                        @click="emit('closeMobile')">
+                        <i class="bi bi-person-badge fs-5"></i>
+                        <span v-if="!isCollapsed" class="sidebar-text">Employees</span>
+                    </router-link>
                 </li>
 
-                <li class="nav-item" v-for="item in ['Bookings', 'Payments', 'Reviews', 'Settings', 'Reports']"
-                    :key="item">
-                    <router-link :to="'/' + item.toLowerCase()"
-                        class="nav-link d-flex align-items-center gap-3 rounded-3 py-2" @click="emit('closeMobile')">
-                        <i :class="['bi', {
-                            'bi-calendar-check': item === 'Bookings',
-                            'bi-credit-card': item === 'Payments',
-                            'bi-star': item === 'Reviews',
-                            'bi-gear': item === 'Settings',
-                            'bi-file-earmark-bar-graph': item === 'Reports'
-                        }, 'fs-5']"></i>
-                        <span v-if="!isCollapsed" class="sidebar-text">{{ item }}</span>
+                <!-- ─── Branches ──────────────────────────────── -->
+                <li class="nav-item">
+                    <router-link to="/branches" class="nav-link d-flex align-items-center gap-3 rounded-3 py-2"
+                        @click="emit('closeMobile')">
+                        <i class="bi bi-building fs-5"></i>
+                        <span v-if="!isCollapsed" class="sidebar-text">Branches</span>
                     </router-link>
                 </li>
             </ul>
