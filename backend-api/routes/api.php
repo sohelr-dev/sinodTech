@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
+use App\Http\Controllers\Api\ProductController;
+
 //Auth routes guest only
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
@@ -24,4 +26,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::get('all-users', [AuthController::class, 'getNewRegisterUsers']);
     Route::post('user/register', [AuthController::class, 'roleRegister']);
-    });
+
+    // ─── Product Management ───────────────────────────────────────────
+    Route::apiResource('products', ProductController::class);
+});
