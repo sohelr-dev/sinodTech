@@ -12,6 +12,8 @@ use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\BranchController;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\InventoryController;
+use App\Http\Controllers\Api\PromotionController;
+use App\Http\Controllers\Api\DashboardController;
 
 //Auth routes guest only
 Route::prefix('auth')->group(function () {
@@ -52,4 +54,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('inventory', [InventoryController::class, 'index']);
     Route::patch('inventory/{id}', [InventoryController::class, 'update']);
 
+    // ─── Promotions ────────────────────────────────────────────────────
+    Route::get('promotions', [PromotionController::class, 'index']);
+    Route::post('promotions/send-to-lost', [PromotionController::class, 'sendToLost']);
+
+    // ─── Dashboard Summary ─────────────────────────────────────────────
+    Route::get('dashboard/stats', [DashboardController::class, 'stats']);
 });
