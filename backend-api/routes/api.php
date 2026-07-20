@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\SaleController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\BranchController;
 use App\Http\Controllers\Api\EmployeeController;
+use App\Http\Controllers\Api\CustomerAssignmentController;
 use App\Http\Controllers\Api\InventoryController;
 use App\Http\Controllers\Api\PromotionController;
 use App\Http\Controllers\Api\DashboardController;
@@ -46,6 +47,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('branches', [BranchController::class, 'index']);
     Route::get('customers', [CustomerController::class, 'index']);
     Route::get('customers/{id}', [CustomerController::class, 'show']);
+    Route::get('assignments', [CustomerAssignmentController::class, 'index']);
+    Route::post('assignments', [CustomerAssignmentController::class, 'store']);
 
     // ─── Employees & KPI ──────────────────────────────────────────────
     Route::get('employees', [EmployeeController::class, 'index']);

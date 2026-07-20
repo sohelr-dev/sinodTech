@@ -16,6 +16,7 @@ class CustomerResource extends JsonResource
             'phone'              => $this->phone,
             'last_purchase_at'   => $this->last_purchase_at ? $this->last_purchase_at->toDateTimeString() : null,
             'is_lost'            => $this->isLost(),
+            'assigned_employee'  => $this->assignments()->where('status', 'assigned')->first()?->employee?->name ?? null,
             // Use count and sum if already loaded/calculated, otherwise fetch
             'purchase_frequency' => $this->sales_count ?? $this->sales()->count(),
             'total_spent'        => (float) ($this->sales_sum_total_amount ?? $this->sales()->sum('total_amount')),

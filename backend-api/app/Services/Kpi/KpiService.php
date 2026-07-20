@@ -2,6 +2,7 @@
 
 namespace App\Services\Kpi;
 
+use App\Models\CustomerAssignment;
 use App\Models\Sale;
 use App\Services\Customer\LostCustomerService;
 
@@ -19,8 +20,6 @@ class KpiService
         if (!$sale->employee_id) {
             return;
         }
-
-        // If no customer is associated, it's a walk-in — no CRM credit
         if (!$sale->customer_id || !$sale->customer) {
             return;
         }
@@ -59,6 +58,11 @@ class KpiService
 
         if ($wasLost) {
             $sale->employee()->increment('kpi_score');
+
+            // Mark active assignments for this customer as completed
+            CustomerAssignment::where('customer_id', $sale->customer_id)
+                ->where('status', 'assigned')
+                ->update(['status' => 'completed']);
         }
     }
 }

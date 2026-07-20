@@ -16,6 +16,7 @@ class UserRoleSeeder extends Seeder
             [
                 'name' => 'Manager',
                 'password' => bcrypt('password'),
+                'role' => 'manager',
             ]
         );
         $manager->assignRole('manager');
@@ -26,6 +27,7 @@ class UserRoleSeeder extends Seeder
             [
                 'name' => 'Sales',
                 'password' => bcrypt('password'),
+                'role' => 'sales',
             ]
         );
         $sales->assignRole('sales');
@@ -36,6 +38,7 @@ class UserRoleSeeder extends Seeder
             [
                 'name' => 'Editor',
                 'password' => bcrypt('password'),
+                'role' => 'editor',
             ]
         );
         $editor->assignRole('editor');

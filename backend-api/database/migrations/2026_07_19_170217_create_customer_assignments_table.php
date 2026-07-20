@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('customer_id')->constrained()->cascadeOnDelete();
             $table->foreignId('employee_id')->constrained('users')->cascadeOnDelete();
             $table->timestamp('assigned_at')->useCurrent();
-            $table->enum('status', ['pending', 'contacted', 'recovered'])->default('pending');
+            $table->enum('status', ['assigned', 'completed', 'pending', 'contacted', 'recovered'])->default('assigned');
             $table->timestamps();
         });
     }
