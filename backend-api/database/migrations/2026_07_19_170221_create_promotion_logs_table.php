@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('promotion_logs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id')->constrained()->cascadeOnDelete();
-            $table->enum('channel', ['email', 'sms']);
+            $table->enum('channel', ['email', 'sms', 'push']);
             $table->timestamp('sent_at')->useCurrent();
             $table->string('status');
             $table->timestamps();
