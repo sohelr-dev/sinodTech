@@ -40,7 +40,10 @@ class SaleController extends Controller
     public function store(StoreSaleRequest $request): JsonResponse
     {
         try {
-            $sale = $this->saleService->createSale($request->validated());
+            $data = $request->validated();
+            $data['employee_id'] = $request->user()->id;
+
+            $sale = $this->saleService->createSale($data);
 
             return response()->json([
                 'message' => 'Sale completed successfully.',
