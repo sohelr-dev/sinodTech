@@ -154,11 +154,16 @@ onMounted(async () => {
 
 async function loadMyStats() {
   try {
-    const res = await employeeService.getAll();
-    const me = res.data.find((e: any) => e.email === auth.user?.email);
+    const meRes = await api.get('me');
+    const me = meRes.data?.data;
     if (me) {
-      myKpi.value   = me.kpi_score;
-      mySales.value = me.total_sales;
+      myKpi.value = me.kpi_score ?? 0;
+    }
+
+    const empRes = await employeeService.getAll();
+    const empMe = empRes.data.find((e: any) => e.id === auth.user?.id);
+    if (empMe) {
+      mySales.value = empMe.total_sales ?? 0;
     }
   } catch {}
 }
