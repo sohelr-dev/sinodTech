@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\SaleController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\BranchController;
 use App\Http\Controllers\Api\EmployeeController;
+use App\Http\Controllers\Api\InventoryController;
 
 //Auth routes guest only
 Route::prefix('auth')->group(function () {
@@ -46,4 +47,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // ─── Employees & KPI ──────────────────────────────────────────────
     Route::get('employees', [EmployeeController::class, 'index']);
+
+    // ─── Inventory (Multi-Branch) ──────────────────────────────────────
+    Route::get('inventory', [InventoryController::class, 'index']);
+    Route::patch('inventory/{id}', [InventoryController::class, 'update']);
+
 });

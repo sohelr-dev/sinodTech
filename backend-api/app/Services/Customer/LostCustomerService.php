@@ -9,11 +9,7 @@ use Illuminate\Support\Carbon;
 class LostCustomerService
 {
     /**
-     * Find inactive ("lost") customers who have not made a purchase within the configurable period,
-     * or who have never made a purchase.
-     *
-     * @param int|null $days
-     * @return Collection<int, Customer>
+     * Find inactive ("lost") customers.
      */
     public function findInactiveCustomers(?int $days = null): Collection
     {
