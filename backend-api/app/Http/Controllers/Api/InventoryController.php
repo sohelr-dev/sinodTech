@@ -61,4 +61,23 @@ class InventoryController extends Controller
             ]
         ]);
     }
+
+    public function lowStock(): JsonResponse
+    {
+        $threshold = 5;
+
+        $items = Inventory::with('product', 'branch')
+            ->where('stock_quantity', '<=', $threshold)
+            ->orderBy('stock_quantity')
+            ->get()
+            ->map(fn($item) => [
+                'id'             => $item->id,
+                'product_name'   => $item->product->name ?? '—',
+                'product_sku'    => $item->product->sku  ?? '—',
+                'branch_name'    => $item->branch->name  ?? '—',
+                'stock_quantity' => $item->stock_quantity,
+            ]);
+
+        return response()->json(['data' => $items]);
+    }
 }

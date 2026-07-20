@@ -55,6 +55,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // ─── Inventory (Multi-Branch) ──────────────────────────────────────
     Route::get('inventory', [InventoryController::class, 'index']);
+    Route::get('inventory/low-stock', [InventoryController::class, 'lowStock']);
     Route::patch('inventory/{id}', [InventoryController::class, 'update']);
 
     // ─── Promotions ────────────────────────────────────────────────────
