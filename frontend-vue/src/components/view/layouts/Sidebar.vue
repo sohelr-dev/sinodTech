@@ -124,6 +124,15 @@ watch(() => props.isCollapsed, (newVal) => {
                     </router-link>
                 </li>
 
+                <!-- ─── Promotions ─────────────────────────────── -->
+                <li class="nav-item">
+                    <router-link to="/promotions" class="nav-link d-flex align-items-center gap-3 rounded-3 py-2"
+                        @click="emit('closeMobile')">
+                        <i class="bi bi-megaphone fs-5"></i>
+                        <span v-if="!isCollapsed" class="sidebar-text">Promotions</span>
+                    </router-link>
+                </li>
+
 
                 <!-- ─── Branches ──────────────────────────────── -->
                 <li class="nav-item">
