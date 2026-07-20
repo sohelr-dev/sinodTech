@@ -4,6 +4,7 @@ import Products from "../view/pages/admin/Products.vue";
 import Checkout from "../view/pages/admin/Checkout.vue";
 import Customers from "../view/pages/admin/Customers.vue";
 import CustomerDetails from "../view/pages/admin/CustomerDetails.vue";
+import Employees from "../view/pages/admin/Employees.vue";
 import Login from "../view/auth/Login.vue";
 import DefaultLayout from "../view/layouts/DefaultLayout.vue";
 import { useAuthStore } from "../../store/auth";
@@ -31,6 +32,7 @@ const routes = [
       { path: 'sales', component: Checkout, meta: { requiresAuth: true, role: 'admin' } },
       { path: 'crm', component: Customers, meta: { requiresAuth: true, role: 'admin' } },
       { path: 'crm/:id', component: CustomerDetails, meta: { requiresAuth: true, role: 'admin' } },
+      { path: 'employees', component: Employees, meta: { requiresAuth: true, role: 'admin' } },
       
     ]
   },
