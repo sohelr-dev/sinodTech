@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import Dashboard from "../view/pages/admin/Dashboard.vue";
 import Products from "../view/pages/admin/Products.vue";
 import Checkout from "../view/pages/admin/Checkout.vue";
+import Customers from "../view/pages/admin/Customers.vue";
+import CustomerDetails from "../view/pages/admin/CustomerDetails.vue";
 import Login from "../view/auth/Login.vue";
 import DefaultLayout from "../view/layouts/DefaultLayout.vue";
 import { useAuthStore } from "../../store/auth";
@@ -27,6 +29,8 @@ const routes = [
       { path: 'dashboard', component: Dashboard, meta: { requiresAuth: true, role: 'admin' } },
       { path: 'products', component: Products, meta: { requiresAuth: true, role: 'admin' } },
       { path: 'sales', component: Checkout, meta: { requiresAuth: true, role: 'admin' } },
+      { path: 'crm', component: Customers, meta: { requiresAuth: true, role: 'admin' } },
+      { path: 'crm/:id', component: CustomerDetails, meta: { requiresAuth: true, role: 'admin' } },
       
     ]
   },
