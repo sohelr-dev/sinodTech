@@ -41,4 +41,5 @@ Route::middleware('auth:sanctum')->group(function () {
     // ─── Branches & Customers ─────────────────────────────────────────
     Route::get('branches', [BranchController::class, 'index']);
     Route::get('customers', [CustomerController::class, 'index']);
+    Route::get('customers/{id}', [CustomerController::class, 'show']);
 });
