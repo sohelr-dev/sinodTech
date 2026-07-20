@@ -18,6 +18,15 @@ import ForgetPassword from "../view/auth/ForgetPassword.vue";
 import VarifyCode from "../view/auth/VarifyCode.vue";
 import ChangePassword from "../view/auth/ChangePassword.vue";
 
+function homePath(role: string): string {
+  switch (role) {
+    case 'admin':   return '/dashboard';
+    case 'manager': return '/manager/dashboard';
+    case 'sales':   return '/sales/dashboard';
+    case 'editor':  return '/editor/dashboard';
+    default:        return '/login';
+  }
+}
 
 const routes = [
   { path: '/login', component: Login, meta: { guestOnly: true } },
@@ -25,87 +34,78 @@ const routes = [
   { path: '/varify-code', component: VarifyCode, meta: { guestOnly: true } },
   { path: '/change-password', component: ChangePassword, meta: { guestOnly: true } },
 
-  { 
+  //Admin
+  {
     path: '/', component: DefaultLayout,
     children: [
-      {path: '', redirect: '/dashboard'},
-      { path: 'dashboard', component: Dashboard, meta: { requiresAuth: true, role: 'admin' } },
-      { path: 'products', component: Products, meta: { requiresAuth: true, role: 'admin' } },
-      { path: 'sales', component: Checkout, meta: { requiresAuth: true, role: 'admin' } },
-      { path: 'crm', component: Customers, meta: { requiresAuth: true, role: 'admin' } },
-      { path: 'crm/:id', component: CustomerDetails, meta: { requiresAuth: true, role: 'admin' } },
-      { path: 'employees', component: Employees, meta: { requiresAuth: true, role: 'admin' } },
-      { path: 'inventory', component: Inventory, meta: { requiresAuth: true, role: 'admin' } },
-      { path: 'promotions', component: Promotions, meta: { requiresAuth: true, role: 'admin' } },
-      
+      { path: '', redirect: '/dashboard' },
+      { path: 'dashboard',   component: Dashboard,       meta: { requiresAuth: true, roles: ['admin'] } },
+      { path: 'promotions',  component: Promotions,      meta: { requiresAuth: true, roles: ['admin'] } },
+      { path: 'crm',         component: Customers,       meta: { requiresAuth: true, roles: ['admin', 'manager'] } },
+      { path: 'crm/:id',     component: CustomerDetails, meta: { requiresAuth: true, roles: ['admin', 'manager'] } },
+      { path: 'employees',   component: Employees,       meta: { requiresAuth: true, roles: ['admin', 'manager'] } },
+
+      // Shared pages — multiple roles can access
+      { path: 'products',    component: Products,        meta: { requiresAuth: true, roles: ['admin', 'editor'] } },
+      { path: 'sales',       component: Checkout,        meta: { requiresAuth: true, roles: ['admin', 'sales'] } },
+      { path: 'inventory',   component: Inventory,       meta: { requiresAuth: true, roles: ['admin', 'editor', 'manager'] } },
     ]
   },
+
+  //Manager Dashboard
   {
-    path:'/manager', component: DefaultLayout,
+    path: '/manager', component: DefaultLayout,
     children: [
-      { path: '', redirect: 'dashboard'},
-      { path: 'dashboard', component: ManagerDashboard, meta: { requiresAuth: true, role: 'manager' } },
-      
+      { path: '', redirect: 'dashboard' },
+      { path: 'dashboard', component: ManagerDashboard, meta: { requiresAuth: true, roles: ['manager'] } },
     ]
   },
+
+  //Sales Dashboard
   {
-    path:'/sales', component: DefaultLayout,
+    path: '/sales', component: DefaultLayout,
     children: [
-      { path: '', redirect: 'dashboard'},
-      { path: 'dashboard', component: SalesDashboard, meta: { requiresAuth: true, role: 'sales' } },
-      
+      { path: '', redirect: 'dashboard' },
+      { path: 'dashboard', component: SalesDashboard, meta: { requiresAuth: true, roles: ['sales'] } },
     ]
   },
+
+  // ─── Editor Dashboard ─────────────────────────────────────────────────
   {
-    path:'/editor', component: DefaultLayout,
+    path: '/editor', component: DefaultLayout,
     children: [
-      { path: '', redirect: 'dashboard'},
-      { path: 'dashboard', component: EditorDashboard, meta: { requiresAuth: true, role: 'editor' } },
-      
+      { path: '', redirect: 'dashboard' },
+      { path: 'dashboard', component: EditorDashboard, meta: { requiresAuth: true, roles: ['editor'] } },
     ]
   },
-  {
-    path: '/:pathMatch(.*)*',
-    name: 'NotFound',
-    component: NotFound
-  }
+
+  { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes
-})
+});
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _from, next) => {
   const auth = useAuthStore();
   const userRole = auth.user?.role || '';
 
   if (to.meta.requiresAuth) {
     if (!auth.isAuthenticated) return next('/login');
 
-    if (to.meta.role && userRole !== to.meta.role) {
-      // redirect to own dashboard
-      switch(userRole) {
-        case 'admin': return next('/dashboard'); // admin
-        case 'manager': return next('/manager/dashboard');
-        case 'sales': return next('/sales/dashboard');
-        case 'editor': return next('/editor/dashboard');
-      }
+    const allowedRoles = to.meta.roles as string[] | undefined;
+    if (allowedRoles && !allowedRoles.includes(userRole)) {
+      return next(homePath(userRole));
     }
   }
 
-  // guest only
+  // Guest-only
   if (to.meta.guestOnly && auth.isAuthenticated) {
-    // logged in user -> redirect
-    switch(auth.userRole) {
-      case 'admin': return next('/dashboard');
-      case 'manager': return next('/manager/dashboard');
-      case 'sales': return next('/sales/dashboard');
-      case 'editor': return next('/editor/dashboard');
-    }
+    return next(homePath(userRole));
   }
 
-  next()
-})
+  next();
+});
 
 export default router;

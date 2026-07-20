@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, Transition, watch } from 'vue';
+import { ref, computed, watch } from 'vue';
+import { useAuthStore } from '../../../store/auth';
 
 const props = defineProps<{
     isCollapsed: boolean;
@@ -7,11 +8,12 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits(['update:isCollapsed', 'closeMobile']);
+const auth = useAuthStore();
+const role = computed(() => auth.user?.role || '');
 
 const openMenu = ref<string | null>(null);
 
 const toggleMenu = (menuName: string) => {
-    //if sidebar collapsed , menu click to sidebar expand
     if (props.isCollapsed) {
         emit('update:isCollapsed', false);
         openMenu.value = menuName;
@@ -20,9 +22,16 @@ const toggleMenu = (menuName: string) => {
     }
 };
 
-//sidebar dropdown 
 watch(() => props.isCollapsed, (newVal) => {
     if (newVal) openMenu.value = null;
+});
+
+// Role-based home path
+const homePath = computed(() => {
+    if (role.value === 'manager') return '/manager/dashboard';
+    if (role.value === 'sales')   return '/sales/dashboard';
+    if (role.value === 'editor')  return '/editor/dashboard';
+    return '/dashboard';
 });
 </script>
 
@@ -34,12 +43,10 @@ watch(() => props.isCollapsed, (newVal) => {
 
         <div class="p-3 border-bottom logo-container">
             <div class="d-flex align-items-center gap-2">
-                <div class="bg-warning rounded   d-flex align-items-center justify-content-center overflow-hidden shadow-sm"
+                <div class="bg-warning rounded d-flex align-items-center justify-content-center overflow-hidden shadow-sm"
                     style="width: 42px; height: 42px; padding: 2px;">
-
                     <span class="fw-bold fs-5 text-white">S</span>
                 </div>
-
                 <h5 v-if="!isCollapsed" class="mb-0 fw-bold sidebar-text text-primary">
                     Sinodtech
                 </h5>
@@ -48,100 +55,136 @@ watch(() => props.isCollapsed, (newVal) => {
 
         <nav class="p-3">
             <ul class="nav flex-column gap-1">
+
+                <!-- ─── Dashboard (all roles) ──────────────── -->
                 <li class="nav-item">
-                    <router-link to="/dashboard" class="nav-link d-flex align-items-center gap-3 rounded-3 py-2"
+                    <router-link :to="homePath" class="nav-link d-flex align-items-center gap-3 rounded-3 py-2"
                         @click="emit('closeMobile')">
                         <i class="bi bi-speedometer2 fs-5"></i>
                         <span v-if="!isCollapsed" class="sidebar-text">Dashboard</span>
                     </router-link>
                 </li>
 
-                <!-- ─── Products ─────────────────────────────── -->
-                <li class="nav-item">
-                    <router-link to="/products" class="nav-link d-flex align-items-center gap-3 rounded-3 py-2"
-                        @click="emit('closeMobile')">
-                        <i class="bi bi-box-seam fs-5"></i>
-                        <span v-if="!isCollapsed" class="sidebar-text">Products</span>
-                    </router-link>
-                </li>
-
-                <!-- ─── Sales ─────────────────────────────────── -->
-                <li class="nav-item">
-                    <router-link to="/sales" class="nav-link d-flex align-items-center gap-3 rounded-3 py-2"
-                        @click="emit('closeMobile')">
-                        <i class="bi bi-cart-check fs-5"></i>
-                        <span v-if="!isCollapsed" class="sidebar-text">Sales</span>
-                    </router-link>
-                </li>
-
-                <!-- ─── CRM ───────────────────────────────────── -->
-                <li class="nav-item">
-                    <router-link to="/crm" class="nav-link d-flex align-items-center gap-3 rounded-3 py-2"
-                        @click="emit('closeMobile')">
-                        <i class="bi bi-people-fill fs-5"></i>
-                        <span v-if="!isCollapsed" class="sidebar-text">CRM</span>
-                    </router-link>
-                </li>
-
-                <!-- ─── Users ─────────────────────────────────── -->
-                <li class="nav-item">
-                    <div class="nav-link d-flex align-items-center gap-3 rounded-3 py-2 cursor-pointer"
-                        :class="{ 'active-dropdown': openMenu === 'users' }" @click="toggleMenu('users')">
-                        <i class="bi bi-shield-lock fs-5"></i>
-                        <span v-if="!isCollapsed" class="sidebar-text">Users</span>
-                        <i v-if="!isCollapsed"
-                            :class="['bi bi-chevron-right ms-auto small transition-icon', { 'rotate-90': openMenu === 'users' }]"></i>
-                    </div>
-                    <Transition name="expand">
-                        <div class="submenu-wrapper" v-show="openMenu === 'users' && !isCollapsed">
-                            <ul class="nav flex-column ms-4 gap-1 mt-1">
-                                <li><router-link to="/users" class="nav-link py-2 small"
-                                        @click="emit('closeMobile')">All Users</router-link></li>
-                                <li><router-link to="/add-user" class="nav-link py-2 small"
-                                        @click="emit('closeMobile')">Add User</router-link></li>
-                                <li><router-link to="/roles" class="nav-link py-2 small"
-                                        @click="emit('closeMobile')">User Roles</router-link></li>
-                            </ul>
+                <!-- ─── Admin-only items ────────────────────── -->
+                <template v-if="role === 'admin'">
+                    <li class="nav-item">
+                        <router-link to="/products" class="nav-link d-flex align-items-center gap-3 rounded-3 py-2"
+                            @click="emit('closeMobile')">
+                            <i class="bi bi-box-seam fs-5"></i>
+                            <span v-if="!isCollapsed" class="sidebar-text">Products</span>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/sales" class="nav-link d-flex align-items-center gap-3 rounded-3 py-2"
+                            @click="emit('closeMobile')">
+                            <i class="bi bi-cart-check fs-5"></i>
+                            <span v-if="!isCollapsed" class="sidebar-text">Sales</span>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/crm" class="nav-link d-flex align-items-center gap-3 rounded-3 py-2"
+                            @click="emit('closeMobile')">
+                            <i class="bi bi-people-fill fs-5"></i>
+                            <span v-if="!isCollapsed" class="sidebar-text">CRM</span>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/employees" class="nav-link d-flex align-items-center gap-3 rounded-3 py-2"
+                            @click="emit('closeMobile')">
+                            <i class="bi bi-person-badge fs-5"></i>
+                            <span v-if="!isCollapsed" class="sidebar-text">Employees</span>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/inventory" class="nav-link d-flex align-items-center gap-3 rounded-3 py-2"
+                            @click="emit('closeMobile')">
+                            <i class="bi bi-boxes fs-5"></i>
+                            <span v-if="!isCollapsed" class="sidebar-text">Inventory</span>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/promotions" class="nav-link d-flex align-items-center gap-3 rounded-3 py-2"
+                            @click="emit('closeMobile')">
+                            <i class="bi bi-megaphone fs-5"></i>
+                            <span v-if="!isCollapsed" class="sidebar-text">Promotions</span>
+                        </router-link>
+                    </li>
+                    <!-- Users dropdown (admin only) -->
+                    <li class="nav-item">
+                        <div class="nav-link d-flex align-items-center gap-3 rounded-3 py-2 cursor-pointer"
+                            :class="{ 'active-dropdown': openMenu === 'users' }" @click="toggleMenu('users')">
+                            <i class="bi bi-shield-lock fs-5"></i>
+                            <span v-if="!isCollapsed" class="sidebar-text">Users</span>
+                            <i v-if="!isCollapsed"
+                                :class="['bi bi-chevron-right ms-auto small transition-icon', { 'rotate-90': openMenu === 'users' }]"></i>
                         </div>
-                    </Transition>
-                </li>
+                        <Transition name="expand">
+                            <div class="submenu-wrapper" v-show="openMenu === 'users' && !isCollapsed">
+                                <ul class="nav flex-column ms-4 gap-1 mt-1">
+                                    <li><router-link to="/users" class="nav-link py-2 small"
+                                            @click="emit('closeMobile')">All Users</router-link></li>
+                                    <li><router-link to="/add-user" class="nav-link py-2 small"
+                                            @click="emit('closeMobile')">Add User</router-link></li>
+                                </ul>
+                            </div>
+                        </Transition>
+                    </li>
+                </template>
 
-                <!-- ─── Employees ─────────────────────────────── -->
-                <li class="nav-item">
-                    <router-link to="/employees" class="nav-link d-flex align-items-center gap-3 rounded-3 py-2"
-                        @click="emit('closeMobile')">
-                        <i class="bi bi-person-badge fs-5"></i>
-                        <span v-if="!isCollapsed" class="sidebar-text">Employees</span>
-                    </router-link>
-                </li>
+                <!-- ─── Manager items ───────────────────────── -->
+                <template v-if="role === 'manager'">
+                    <li class="nav-item">
+                        <router-link to="/crm" class="nav-link d-flex align-items-center gap-3 rounded-3 py-2"
+                            @click="emit('closeMobile')">
+                            <i class="bi bi-people-fill fs-5"></i>
+                            <span v-if="!isCollapsed" class="sidebar-text">CRM</span>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/employees" class="nav-link d-flex align-items-center gap-3 rounded-3 py-2"
+                            @click="emit('closeMobile')">
+                            <i class="bi bi-person-badge fs-5"></i>
+                            <span v-if="!isCollapsed" class="sidebar-text">Employees</span>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/inventory" class="nav-link d-flex align-items-center gap-3 rounded-3 py-2"
+                            @click="emit('closeMobile')">
+                            <i class="bi bi-boxes fs-5"></i>
+                            <span v-if="!isCollapsed" class="sidebar-text">Inventory</span>
+                        </router-link>
+                    </li>
+                </template>
 
-                <!-- ─── Inventory ──────────────────────────────── -->
-                <li class="nav-item">
-                    <router-link to="/inventory" class="nav-link d-flex align-items-center gap-3 rounded-3 py-2"
-                        @click="emit('closeMobile')">
-                        <i class="bi bi-boxes fs-5"></i>
-                        <span v-if="!isCollapsed" class="sidebar-text">Inventory</span>
-                    </router-link>
-                </li>
+                <!-- ─── Sales items ─────────────────────────── -->
+                <template v-if="role === 'sales'">
+                    <li class="nav-item">
+                        <router-link to="/sales" class="nav-link d-flex align-items-center gap-3 rounded-3 py-2"
+                            @click="emit('closeMobile')">
+                            <i class="bi bi-cart-check fs-5"></i>
+                            <span v-if="!isCollapsed" class="sidebar-text">New Sale</span>
+                        </router-link>
+                    </li>
+                </template>
 
-                <!-- ─── Promotions ─────────────────────────────── -->
-                <li class="nav-item">
-                    <router-link to="/promotions" class="nav-link d-flex align-items-center gap-3 rounded-3 py-2"
-                        @click="emit('closeMobile')">
-                        <i class="bi bi-megaphone fs-5"></i>
-                        <span v-if="!isCollapsed" class="sidebar-text">Promotions</span>
-                    </router-link>
-                </li>
+                <!-- ─── Editor items ────────────────────────── -->
+                <template v-if="role === 'editor'">
+                    <li class="nav-item">
+                        <router-link to="/products" class="nav-link d-flex align-items-center gap-3 rounded-3 py-2"
+                            @click="emit('closeMobile')">
+                            <i class="bi bi-box-seam fs-5"></i>
+                            <span v-if="!isCollapsed" class="sidebar-text">Products</span>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/inventory" class="nav-link d-flex align-items-center gap-3 rounded-3 py-2"
+                            @click="emit('closeMobile')">
+                            <i class="bi bi-boxes fs-5"></i>
+                            <span v-if="!isCollapsed" class="sidebar-text">Inventory</span>
+                        </router-link>
+                    </li>
+                </template>
 
-
-                <!-- ─── Branches ──────────────────────────────── -->
-                <li class="nav-item">
-                    <router-link to="/branches" class="nav-link d-flex align-items-center gap-3 rounded-3 py-2"
-                        @click="emit('closeMobile')">
-                        <i class="bi bi-building fs-5"></i>
-                        <span v-if="!isCollapsed" class="sidebar-text">Branches</span>
-                    </router-link>
-                </li>
             </ul>
         </nav>
     </div>
@@ -206,7 +249,6 @@ watch(() => props.isCollapsed, (newVal) => {
 .transition-icon {
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
 
 @media (max-width: 768px) {
     #sidebar {
