@@ -57,12 +57,20 @@ class KpiService
         }
 
         if ($wasLost) {
-            $sale->employee()->increment('kpi_score');
-
-            // Mark active assignments for this customer as completed
-            CustomerAssignment::where('customer_id', $sale->customer_id)
+            // Find the active assignment for this customer to reward the correct follow-up employee
+            $assignment = CustomerAssignment::where('customer_id', $sale->customer_id)
                 ->where('status', 'assigned')
-                ->update(['status' => 'completed']);
+                ->first();
+
+            if ($assignment) {
+                $assignment->employee()->increment('kpi_score');
+                $assignment->update(['status' => 'completed']);
+            } else {
+                // Fallback: if there was no active assignment, award to the cashier who processed the sale
+                if ($sale->employee_id) {
+                    $sale->employee()->increment('kpi_score');
+                }
+            }
         }
     }
 }
