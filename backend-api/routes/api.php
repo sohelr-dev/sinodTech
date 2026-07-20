@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\SaleController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\BranchController;
+use App\Http\Controllers\Api\EmployeeController;
 
 //Auth routes guest only
 Route::prefix('auth')->group(function () {
@@ -42,4 +43,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('branches', [BranchController::class, 'index']);
     Route::get('customers', [CustomerController::class, 'index']);
     Route::get('customers/{id}', [CustomerController::class, 'show']);
+
+    // ─── Employees & KPI ──────────────────────────────────────────────
+    Route::get('employees', [EmployeeController::class, 'index']);
 });

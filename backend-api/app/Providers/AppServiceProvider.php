@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Event;
+use App\Events\SaleCompleted;
+use App\Listeners\SaleCompletedListener;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,6 +30,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Register Event → Listener mappings
+        Event::listen(
+            SaleCompleted::class,
+            SaleCompletedListener::class
+        );
     }
 }
