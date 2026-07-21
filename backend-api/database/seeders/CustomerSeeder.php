@@ -9,39 +9,29 @@ class CustomerSeeder extends Seeder
 {
     public function run(): void
     {
-        Customer::create([
-            'name' => 'Rahim Kurdi',
-            'email' => 'rahim@gmail.com',
-            'phone' => '01711223344',
-            'last_purchase_at' => now()->subDays(5)
-        ]);
+        Customer::firstOrCreate(
+            ['email' => 'rahim@gmail.com'],
+            ['name' => 'Rahim Kurdi', 'phone' => '01711223344', 'last_purchase_at' => now()->subDays(5)]
+        );
 
-        Customer::create([
-            'name' => 'Karim Rahman',
-            'email' => 'karim@gmail.com',
-            'phone' => '01811223344',
-            'last_purchase_at' => now()->subDays(20)
-        ]);
+        Customer::firstOrCreate(
+            ['email' => 'karim@gmail.com'],
+            ['name' => 'Karim Rahman', 'phone' => '01811223344', 'last_purchase_at' => now()->subDays(20)]
+        );
 
-        Customer::create([
-            'name' => 'Sabbir Ahmed',
-            'email' => 'sabbir@gmail.com',
-            'phone' => '01911223344',
-            'last_purchase_at' => now()->subDays(95)
-        ]);
+        Customer::firstOrCreate(
+            ['email' => 'sabbir@gmail.com'],
+            ['name' => 'Sabbir Ahmed', 'phone' => '01911223344', 'last_purchase_at' => now()->subDays(95)]
+        );
 
-        Customer::create([
-            'name' => 'Nayeem Islam',
-            'email' => 'nayeem@gmail.com',
-            'phone' => '01511223344',
-            'last_purchase_at' => null
-        ]);
-        
-        Customer::create([
-            'name' => 'Tasnim Ara',
-            'email' => 'tasnim@gmail.com',
-            'phone' => '01611223344',
-            'last_purchase_at' => now()->subDays(120)
-        ]);
+        Customer::firstOrCreate(
+            ['email' => 'nayeem@gmail.com'],
+            ['name' => 'Nayeem Islam', 'phone' => '01511223344', 'last_purchase_at' => null]
+        );
+
+        Customer::firstOrCreate(
+            ['email' => 'tasnim@gmail.com'],
+            ['name' => 'Tasnim Ara', 'phone' => '01611223344', 'last_purchase_at' => now()->subDays(120)]
+        );
     }
 }

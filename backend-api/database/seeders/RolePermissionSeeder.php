@@ -12,20 +12,24 @@ class RolePermissionSeeder extends Seeder
     public function run(): void
     {
         // role creation
-        $adminRole = Role::create(['name' => 'admin']);
-        Role::create(['name' => 'manager']);
-        Role::create(['name' => 'sales']);
-        Role::create(['name' => 'editor']);
-        $customerRole = Role::create(['name' => 'customer']);
+        $adminRole = Role::firstOrCreate(['name' => 'admin']);
+        Role::firstOrCreate(['name' => 'manager']);
+        Role::firstOrCreate(['name' => 'sales']);
+        Role::firstOrCreate(['name' => 'editor']);
+        $customerRole = Role::firstOrCreate(['name' => 'customer']);
 
         // default admin user creation
-        $admin = User::create([
-            'name' => 'Super Admin',
-            'email' => 'admin@gmail.com',
-            'password' => bcrypt('password'),
-            'role' => 'admin',
-        ]);
+        $admin = User::firstOrCreate(
+            ['email' => 'admin@gmail.com'],
+            [
+                'name' => 'Super Admin',
+                'password' => bcrypt('password'),
+                'role' => 'admin',
+            ]
+        );
 
-        $admin->assignRole($adminRole);
+        if (!$admin->hasRole('admin')) {
+            $admin->assignRole($adminRole);
+        }
     }
 }

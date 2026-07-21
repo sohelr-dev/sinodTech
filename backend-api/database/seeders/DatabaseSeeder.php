@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             BranchSeeder::class,
             ProductSeeder::class,
             CustomerSeeder::class,
+            SaleSeeder::class,
         ]);
 
         // Seed inventory for all products across all branches
@@ -26,9 +27,10 @@ class DatabaseSeeder extends Seeder
 
         foreach ($branches as $branch) {
             foreach ($products as $product) {
-                \App\Models\Inventory::create([
+                \App\Models\Inventory::firstOrCreate([
                     'product_id' => $product->id,
                     'branch_id' => $branch->id,
+                ], [
                     'stock_quantity' => rand(20, 100)
                 ]);
             }

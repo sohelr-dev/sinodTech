@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\CustomerAssignmentController;
 use App\Http\Controllers\Api\InventoryController;
 use App\Http\Controllers\Api\PromotionController;
 use App\Http\Controllers\Api\DashboardController;
+use App\Http\Controllers\Api\EcommerceProductController;
 
 //Auth routes guest only
 Route::prefix('auth')->group(function () {
@@ -64,4 +65,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // ─── Dashboard Summary ─────────────────────────────────────────────
     Route::get('dashboard/stats', [DashboardController::class, 'stats']);
+
+    // ─── E-Commerce Integration API (Bonus Feature) ────────────────────
+    Route::prefix('v1/ecommerce')->group(function () {
+        Route::get('products', [EcommerceProductController::class, 'index']);
+        Route::get('products/{identifier}', [EcommerceProductController::class, 'show']);
+    });
 });
+

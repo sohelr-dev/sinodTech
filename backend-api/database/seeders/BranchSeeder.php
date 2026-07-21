@@ -9,8 +9,8 @@ class BranchSeeder extends Seeder
 {
     public function run(): void
     {
-        Branch::create(['name' => 'Dhaka Branch', 'address' => 'Dhaka, Bangladesh']);
-        Branch::create(['name' => 'Chittagong Branch', 'address' => 'Chittagong, Bangladesh']);
-        Branch::create(['name' => 'Sylhet Branch', 'address' => 'Sylhet, Bangladesh']);
+        Branch::firstOrCreate(['name' => 'Dhaka Branch'], ['address' => 'Dhaka, Bangladesh']);
+        Branch::firstOrCreate(['name' => 'Chittagong Branch'], ['address' => 'Chittagong, Bangladesh']);
+        Branch::firstOrCreate(['name' => 'Sylhet Branch'], ['address' => 'Sylhet, Bangladesh']);
     }
 }
